@@ -5,12 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.navigation.fragment.findNavController
 import com.example.dagger.application_graph.ApplicationGraph
 import com.example.dagger.application_graph.DaggerApplicationGraph
 import com.example.dagger.dagger_test.TestClass
 import com.example.dagger.dagger_test.TestUserClass
+import com.example.dagger.databinding.FragmentFirstBinding
 import com.example.dagger.user.UserRepository
 
 class FirstFragment : Fragment() {
@@ -19,12 +19,14 @@ class FirstFragment : Fragment() {
     private val userRepository: UserRepository = applicationGraph.repository()
     private val testClass: TestClass = applicationGraph.getTestClass()
     private val testUserClass: TestUserClass = applicationGraph.getTestUserClass()
+    private lateinit var fragmentFirstBinding: FragmentFirstBinding
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_first, container, false)
+    ): View {
+        fragmentFirstBinding = FragmentFirstBinding.inflate(layoutInflater)
+        return fragmentFirstBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,7 +44,7 @@ class FirstFragment : Fragment() {
 
         userRepository.testRx()?.subscribe(userRepository.getObserver())
 
-        view.findViewById<Button>(R.id.button_first).setOnClickListener {
+        fragmentFirstBinding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
     }
