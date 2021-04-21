@@ -9,13 +9,12 @@ import javax.inject.Inject
 
 const val TAG = "UserRepository"
 
-// @Inject lets Dagger know how to create instances of this object
 class UserRepository @Inject constructor(
     private val localDataSource: UserLocalDataSource,
     private val remoteDataSource: UserRemoteDataSource
 ) {
-    private fun getUserLocalDataSource() = localDataSource
-    private fun getUserRemoteDataSource() = remoteDataSource
+    fun getUserLocalDataSource() = localDataSource
+    fun getUserRemoteDataSource() = remoteDataSource
 
     fun testRx(): @NonNull Observable<ArrayList<UserLocalDataSource>>? {
         val dataSources = ArrayList<UserLocalDataSource>()
